@@ -1,0 +1,37 @@
+.top-nav-bar {
+    height: 7.4vh;
+    background-color: #293241;
+    box-shadow: 0 4px 8px 0 black, 0 6px 20px 0 black;
+}
+
+.searchBar {
+    font-weight: bold;
+    color: black;
+    font-size: 1rem;
+}
+
+.title {
+    margin-left: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+    .myNavBar {
+        height: 15vh;
+    }
+
+    .title {
+        align-self: center;
+        margin: 0.5vh auto;
+        display: block;
+    }
+
+    .print {
+        visibility: hidden;
+    }
+
+    .searchBar {
+        margin: 0.2vh
+    }
+}
+  
+

@@ -1,0 +1,163 @@
+.chart{
+    display: inline-block;
+    height: 70vh;
+    width: 100%;
+}
+
+.apex__chart, .recomandations, .stats {
+    margin: 3vh 2vw 2vh 0;
+    box-shadow: 0 4px 8px 0 black, 0 6px 20px 0 black;
+}
+
+.apex__chart {
+    float: right;
+
+}
+
+.recomandations, .stats{
+    display: inline-block;
+    width: 35%;
+    height: 30vh;
+    margin: 3vh 2vw;
+    margin-right: 0;
+    color: white;
+}
+
+.stats {
+    align-items: center;
+    display: block; 
+    position: absolute;
+    left: 0;
+}
+
+.bar__chart {
+    margin-top: 3vh;
+}
+
+.stock {
+    margin: 1.5vh 0 1.5vh 2vw;
+    display: inline-block;
+    width: 40%;
+    height: 30%;
+    box-shadow: 0 2px 4px 0 gray, 0 3px 10px 0 gray;
+    font-size: 20px;
+    padding: 0.4rem;
+    text-align: center;
+    justify-content: center;
+}
+
+.average {
+    margin-left: 2vw;
+    margin-right: 1vw;
+}
+
+#average {
+    margin-right: 1vw;
+}
+
+.average__line {
+    color: white;
+    margin-left: 5.5%;
+    
+    position: absolute; 
+}
+
+.average__line h5 {
+    margin-bottom: -1vw;
+    margin-left: 45%;
+}
+
+hr {
+    width: 42.2vw;
+    size: 2;
+    margin-left: 10vw;
+}
+
+.h5__daily {
+    margin: 0.5vh 30%;
+    font-size: medium;
+}
+
+.range{
+    margin-left: 1vw;
+    margin-right: 1vw;
+}
+
+#range, #interval {
+    margin-right: 2vw;
+}
+
+#interval {
+    margin-left: 1vw;
+}
+
+.chart__filter {
+    display: inline-block;
+}
+
+@media screen and (max-width: 600px) {
+    .chart {
+        height: 130vh;
+    }
+    .apex__chart {
+        float: left;
+        width: 95%;
+        margin-left: 2vw;
+        margin-bottom: 20vh;
+    }
+
+    .recomandations, .stats{
+        width: 45%;
+        height: 40%;
+    }
+
+    .recomandations {
+        margin-left: 5vw;
+    }
+    
+    .h5__daily {
+        margin: 0.5vh 20%;
+        font-size: medium;
+    }
+
+    .stock {
+        font-size: 15px;
+        padding: 0.2rem;
+    }
+
+    .stock h5 {
+        font-size: medium;
+    }
+
+    .stats {
+        position: relative;
+        float: left;
+    }
+
+    hr{
+        width: 65vw;
+        margin-left: 19vw;
+    }
+
+}
+
+@media screen and (min-width: 700px) {
+    hr{
+        width: 38vw;
+        margin-left: 12vw;
+    }
+}
+
+@media screen and (min-width: 900px) {
+    hr{
+        width: 44vw;
+        margin-left: 9vw;
+    }
+}
+
+@media screen and (min-width: 1000px) {
+    hr{
+        width: 45vw;
+        margin-left: 7vw;
+    }
+}
