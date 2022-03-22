@@ -29,16 +29,6 @@ const Stats = ({volume}:{volume:any}) => {
         show: false
       },
       xaxis: {
-        categories: [
-          ['John', 'Doe'],
-          ['Joe', 'Smith'],
-          ['Jake', 'Williams'],
-          'Amber',
-          ['Peter', 'Brown'],
-          ['Mary', 'Evans'],
-          ['David', 'Wilson'],
-          ['Lily', 'Roberts'], 
-        ],
         labels: {
           style: {
             colors: "blue",
@@ -51,6 +41,7 @@ const Stats = ({volume}:{volume:any}) => {
  
   return (
     <div className = "stats">
+      <h6 style = {{marginLeft: "30%"}}>Volume(last 7 days)</h6>
       <ReactApexChart options={options} series={options.series} width = {window.innerWidth * 35 / 100} height = {window.innerHeight * 25 / 100} type="bar" className = "bar__chart"/>
     </div>
   )

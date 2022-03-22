@@ -1,6 +1,6 @@
 import ApexChart from 'react-apexcharts'
 import '../stylesheets/charts.css'
-import Recomandations from './Recomandations';
+import Recommendations from './Recommendations';
 import Stats from './Stats';
 import {useState} from 'react'
 
@@ -44,18 +44,18 @@ const Chart = ({myData, volume, recommendedSymbols, setRange, setInterval, fetch
     const changeRange = (event:any) => {
       console.log(event.currentTarget.value)
       setRange(event.currentTarget.value)
-      fetchData()
+      //fetchData()
     }
 
     const changeInterval= (event:any) => {
       console.log(event.currentTarget.value)
       setInterval(event.currentTarget.value)
-      fetchData()
+      //fetchData()
     }
 
     return (
       <div className = "chart"> 
-          <Recomandations  recommendedSymbols = {recommendedSymbols}/>
+          <Recommendations  recommendedSymbols = {recommendedSymbols}/>
           <Stats volume = {volumeData}/>
           <div className = "apex__chart">
             <div className='chart__filter'>

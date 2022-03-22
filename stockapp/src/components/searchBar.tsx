@@ -13,7 +13,6 @@ const searchBar = ({handleChange, handleClick, onClick}:{handleChange:any, handl
             <Container fluid>
                 
                 <Navbar.Brand href="#" className='pl-2 title'>Trading View</Navbar.Brand>
-                <button onClick = {onClick} className = "print">Click me</button>
                 <Form className="d-flex searchBox">
                     <FormControl
                         type="text"

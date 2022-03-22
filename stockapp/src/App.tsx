@@ -17,7 +17,7 @@ function App() {
   const [range, setRange] = useState('6mo')
   const [volume, setVolume] = useState([])
   const [average, setAverage] = useState(0)
-  const [recommendedSymbols, setRecommendedSymbols] = useState({})
+  const [recommendedSymbols, setRecommendedSymbols] = useState([])
   const [margin, setMargin] = useState(0)
   
   const printData = ():void => {
@@ -28,25 +28,23 @@ function App() {
   }
 
   function abbreviateNumber(value:number) {
-    var newValue:any = value;
-    if (value >= 1000) {
-        var suffixes = ["", "k", "m", "b","t"];
-        var suffixNum = Math.floor( (""+value).length/3 );
-        var shortValue:any = 0;
-        for (var precision = 2; precision >= 1; precision--) {
-            shortValue = parseFloat( (suffixNum != 0 ? (value / Math.pow(1000,suffixNum) ) : value).toPrecision(precision));
-            var dotLessShortValue = (shortValue + '').replace(/[^a-zA-Z 0-9]+/g,'');
-            if (dotLessShortValue.length <= 2) { break; }
-        }
-        if (shortValue % 1 != 0)  shortValue = shortValue.toFixed(1);
-        newValue = shortValue+suffixes[suffixNum];
+    let newValue:any = value;
+    const suffixes = ["", "K", "M"];
+    let suffixNum = 0;
+    while (newValue >= 1000 && suffixNum < 3) {
+      newValue /= 1000;
+      suffixNum++;
     }
+  
+    newValue = newValue.toPrecision(3);
+  
+    newValue += suffixes[suffixNum];
     return newValue;
  }
 
   //I'm searching the name and the symbol using the text introduced
   //If I get no response, the text might be the symbol and this search doesn't affect me
-  async function fetchCompanyName () {
+  const fetchCompanyName = async() => {
     var axios = require("axios").default;
     var options = {
       method: 'GET',
@@ -58,7 +56,7 @@ function App() {
     };
     //ResultSet.Result[0]
     await axios.request(options).then(function (response:any) {
-      console.log(response.data.ResultSet.Result[0].symbol);
+      //console.log(response.data.ResultSet.Result[0].symbol);
       setSymbol(response.data.ResultSet.Result[0].symbol)
       setCompanyName(response.data.ResultSet.Result[0].name.split(' ')[0])
      // setCompanyData(response.data)
@@ -67,11 +65,11 @@ function App() {
     });
   }
 
+  /**
  const fetchRecommendations = async() => {
   var axios = require("axios").default;
     var options = {
       method: 'GET',
-      //url: `https://yfapi.net/v8/finance/chart/${companySymbol}?range=${range}&region=US&interval=${timeStamp}&lang=en&events=div%2Csplit`,
 
       url: `https://yfapi.net/v6/finance/recommendationsbysymbol/${symbol}`,
       params: {modules: 'defaultKeyStatistics,assetProfile'},
@@ -81,17 +79,16 @@ function App() {
      };
 
     await axios.request(options).then(function (response:any) {
-      console.log("---------------" + response.data.finance.result[0].recommendedSymbols[0])//finance.result[0].recommendedSymbols[0]
-      console.log(response.data.finance.result[0].recommendedSymbols[0].symbol)
-      //setRecommendedSymbols(response.data.finance.result[0].recommendedSymbols)
+      console.log("---------------" + response.data.finance.result[0].recommendedSymbols)//finance.result[0].recommendedSymbols[0]
+      console.log(response.data.finance.result[0].recommendedSymbols)
+      setRecommendedSymbols(response.data.finance.result[0].recommendedSymbols)
     }).catch(function (error:any) {
       console.error(error);
     });
-}
-
+}*/
 
   //fetching company's data
-  async function fetchCompanyData () {
+  const fetchCompanyData = async() =>  {
     var axios = require("axios").default;
     var options = {
       //url: `https://yfapi.net/v8/finance/chart/${companySymbol}?range=${range}&region=US&interval=${timeStamp}&lang=en&events=div%2Csplit`,
@@ -104,65 +101,65 @@ function App() {
     };
 
     await axios.request(options).then(function (response:any) {
-      console.log(response.data);
+      //console.log(response.data);
       const myData = response.data.chart.result[0];
-      console.log(myData)
+     // console.log(myData)
       //getting the prices
-        const prices = myData.timestamp.map((timestamp:number, index:number) => ({
+      const prices = myData.timestamp.map((timestamp:number, index:number) => ({
           x: new Date(timestamp * 1000).toLocaleString('en-US').split(',')[0],
           y: [myData.indicators.quote[0].open[index], myData.indicators.quote[0].high[index], myData.indicators.quote[0].low[index], myData.indicators.quote[0].close[index]]
-        }));
-        setCompanyData([{
-          data:prices,
-        }]);
-        console.log(prices)
+      }));
+      setCompanyData([{
+        data:prices,
+      }]);
+      //console.log(prices)
       
-        //make average
-        let average:number = 0;
+      //make average
+      let average:number = 0;
 
-        var iterator = myData.indicators.quote[0].close.values();
-        var maxim = 0;
-        for (let element of iterator) {
-          average += element;
-        }
+      var iterator = myData.indicators.quote[0].close.values();
+      var maxim = 0;
+      for (let element of iterator) {
+        average += element;
+      }
 
-        iterator = myData.indicators.quote[0].high.values();
-        for (let element of iterator) {
-          if(element > maxim)
-            maxim = element;
-        }
+      iterator = myData.indicators.quote[0].high.values();
+      for (let element of iterator) {
+        if(element > maxim)
+          maxim = element;
+      }
 
-        console.log(average / (prices.length - 1))
-        setAverage(average / (prices.length - 1));
+      //console.log(average / (prices.length - 1))
+      setAverage(average / (prices.length - 1));
         
-        //Here I calculate the difference between the maxim and the average        
-        let diff:number = 1 - average / (prices.length - 1) / maxim;
+      //Here I calculate the difference between the maxim and the average        
+      let diff:number = 1 - average / (prices.length - 1) / maxim;
         
-        let margin = diff * 100;
-        console.log(margin)
-        setMargin(margin)
+      let margin = diff * 100;
+      //console.log(margin)
+      setMargin(margin)
         
-        //getting the volume
-        const volume = myData.indicators.quote[0].volume.map((volume:number) => 
-          abbreviateNumber(volume));
-        setVolume(volume.slice(-7));
-        console.log(volume);
+      //getting the volume
+      const volume = myData.indicators.quote[0].volume.map((volume:number) => 
+        abbreviateNumber(volume));
+      setVolume(volume.slice(-7));
+      //console.log(volume);
           
-      }).catch(function (error:any) {
-        console.error(error);
-      });
+    }).catch(function (error:any) {
+      console.error(error);
+    });
   }
 
   //by default, the site will show Apple data
   useEffect(() => {
-    fetchRecommendations();
+    //fetchRecommendations();
     fetchCompanyData();
-  }, [])
+  }, [symbol, range, interval])
 
   const handleClick = ():void => {
     console.log(companyName)
     fetchCompanyName();
-    fetchCompanyData();
+    //fetchCompanyData();
   }
 
   const handleChange = (name:string):void => {
