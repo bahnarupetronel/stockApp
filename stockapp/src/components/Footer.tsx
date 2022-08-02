@@ -19,29 +19,26 @@ const Footer = ({setStartDate, setEndDate}:{setStartDate:any, setEndDate:any}) =
   return (
     <div className = "footer">
       <div className = "footer-container">
-        <form>
-          <div>
-            <label>Date from</label>
-            <input type="date" name="trip-start" className = "date date__start"
-                min="01-01-2010" max = {date} placeholder="MM-DD-YYYY"
-                onChange = {(event) => setStartDate(event.target.value)}
-                />
-          </div>
-          
-          <div>
-            <label style = {{marginRight: "2vw"}}>To</label>
-            <input type="date" name="trip-end" className = "date date__end"
-                min="01-01-2010" max = {date} placeholder = "MM-DD-YYYY"
-                onChange = {(event) => setEndDate(event.target.value)}/>
-          </div>
-        </form>
-        <Button 
-              //onClick = {handleClick}
-              className = "btn btn-secondary btn-filter">Filter
-          </Button>
+
       </div>
     </div>
   )
 }
 
+/*
+<div>
+            <label>Date from</label>
+            <input type="date" name="trip-start" className = "date date__start"
+                min="01-01-2010" max = {date} placeholder= {date}
+                onChange = {(event) => setStartDate(event.target.value)}
+                />
+          </div>
+
+          <div>
+            <label style = {{marginRight: "2vw"}}>To</label>
+            <input type="date" name="trip-end" className = "date date__end"
+                min="01-01-2010" max = {date} placeholder = {date}
+                onChange = {(event) => setEndDate(event.target.value)}/>
+          </div>
+ */
 export default Footer

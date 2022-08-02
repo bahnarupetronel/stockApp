@@ -4,22 +4,20 @@
     width: 100%;
 }
 
-.apex__chart, .recomandations, .stats {
+.apex__chart, .recommendations, .stats {
     margin: 3vh 2vw 2vh 0;
     box-shadow: 0 4px 8px 0 black, 0 6px 20px 0 black;
 }
 
 .apex__chart {
     float: right;
-
 }
 
-.recomandations, .stats{
+.recommendations, .stats{
     display: inline-block;
     width: 35%;
     height: 30vh;
-    margin: 3vh 2vw;
-    margin-right: 0;
+    margin: 3vh 0 3vh 2vw;
     color: white;
 }
 
@@ -28,6 +26,12 @@
     display: block; 
     position: absolute;
     left: 0;
+}
+
+.company{
+    color:white;
+    font-size: 20px;
+    margin: 0.5vh 43%;
 }
 
 .bar__chart {
@@ -41,9 +45,12 @@
     height: 30%;
     box-shadow: 0 2px 4px 0 gray, 0 3px 10px 0 gray;
     font-size: 20px;
-    padding: 0.4rem;
     text-align: center;
     justify-content: center;
+}
+
+.stock:hover {
+    box-shadow: 0 2px 6px black;
 }
 
 .average {
@@ -69,7 +76,6 @@
 
 hr {
     width: 42.2vw;
-    size: 2;
     margin-left: 10vw;
 }
 
@@ -95,7 +101,19 @@ hr {
     display: inline-block;
 }
 
+.btn__stock {
+    padding: 0.2rem 0.4rem 0.4rem 0.4rem;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    border-color: transparent;
+    color:white;
+}
+
 @media screen and (max-width: 600px) {
+    .chart__filter {
+        margin-left: 6vw;
+    }
     .chart {
         height: 130vh;
     }
@@ -106,12 +124,12 @@ hr {
         margin-bottom: 20vh;
     }
 
-    .recomandations, .stats{
+    .recommendations, .stats{
         width: 45%;
         height: 40%;
     }
 
-    .recomandations {
+    .recommendations {
         margin-left: 5vw;
     }
     

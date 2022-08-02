@@ -1,26 +1,40 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import '../stylesheets/charts.css'
 import Stock from './Stock'
-import PropTypes from 'prop-types';
+import {fetchRecommendations} from "./Requests";
 
-const Recommendations = ({recommendedSymbols}:{recommendedSymbols:any}) => {
-  //console.log("---------------" )//finance.result[0].recommendedSymbols[0]
-  //if(recommendedSymbols !== "undefined") console.log(recommendedSymbols[0])
-  return ( //[0].symbol
-    <div className = "recomandations">
-        <h5 className = 'h5__daily'>Recomandations</h5>  
-          <Stock symbol = "AMZN"/>
-          <Stock symbol = "PLTR"/>
-          <Stock symbol = "GME"/>
-          <Stock symbol = "GOOG"/>
+const Recommendations = ({symbol, dataIsLoaded, setSymbol, interval, range}:{symbol:string, dataIsLoaded:boolean, setSymbol:any, interval:any, range:any}) => {
+    const [recommendedSymbols, setRecommendedSymbols] = useState<any[]>([])
+    //by default, the site will show Apple data
+    useEffect(() => {
+
+      fetchRecommendations(symbol).then(function (response) {
+          console.log(response.finance.result[0].recommendedSymbols[0].symbol)
+          setRecommendedSymbols(response.finance.result[0].recommendedSymbols)
+          //console.log(recommendedSymbols[0].symbol)// finance.result[0].recommendedSymbols
+      })
+    }, [symbol, dataIsLoaded])
+
+  if (typeof(recommendedSymbols[0]) != "undefined")
+  return (
+    <div className = "recommendations">
+        <h5 className = 'h5__daily'>Recommendations</h5>
+        <Stock symbol = {recommendedSymbols[0].symbol} setSymbol = {setSymbol} interval = {interval} range = {range}/>
+        <Stock symbol = {recommendedSymbols[1].symbol} setSymbol = {setSymbol} interval = {interval} range = {range}/>
+        <Stock symbol = {recommendedSymbols[2].symbol} setSymbol = {setSymbol} interval = {interval} range = {range}/>
+        <Stock symbol = {recommendedSymbols[3].symbol} setSymbol = {setSymbol} interval = {interval} range = {range}/>
       </div>
   )
+    else
+      return ( //[0].symbol
+          <div className = "recommendations">
+              <h5 className = 'h5__daily'>Recommendations</h5>
+              <Stock symbol = {" "} setSymbol = {setSymbol} interval = {interval} range = {range}/>
+              <Stock symbol = {" "} setSymbol = {setSymbol}  interval = {interval} range = {range}/>
+              <Stock symbol = {" "} setSymbol = {setSymbol}  interval = {interval} range = {range}/>
+              <Stock symbol = {" "} setSymbol = {setSymbol}  interval = {interval} range = {range}/>
+          </div>
+      )
 }
-/**
- * <Stock symbol = {recommendedSymbols[0].symbol}/>
-        <Stock symbol = {recommendedSymbols[1].symbol}/>
-        <Stock symbol = {recommendedSymbols[2].symbol}/>
-        <Stock symbol = {recommendedSymbols[3].symbol}/>
- */
 
 export default Recommendations
